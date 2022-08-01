@@ -45,7 +45,8 @@ def check_over(puzzle: list) -> bool:
         or puzzle[1] == puzzle[4] == puzzle[7] != ' ' \
         or puzzle[2] == puzzle[5] == puzzle[8] != ' ' \
         or puzzle[0] == puzzle[4] == puzzle[8] != ' ' \
-        or puzzle[2] == puzzle[4] == puzzle[6] != ' '
+        or puzzle[2] == puzzle[4] == puzzle[6] != ' ' \
+        or ' ' not in puzzle
 
 def game_over(puzzle: list):
     print_grid(puzzle)
@@ -76,7 +77,7 @@ def main():
     num_player = int(input("number of players: "))
     puzzle = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
     turn = False
-    if num_player == 0:
+    if num_player == 2:
         while not check_over(puzzle):
             print_grid(puzzle)
             index = int(input("index (0~8): "))
@@ -92,6 +93,12 @@ def main():
             else:
                 index = optimaliser(puzzle, turn)
             turn = place_piece(puzzle, turn, index)
+        game_over(puzzle)
+
+    if num_player == 0:
+        while not check_over(puzzle):
+            print_grid(puzzle)
+            turn = place_piece(puzzle, turn, optimaliser(puzzle, turn))
         game_over(puzzle)
 
 
